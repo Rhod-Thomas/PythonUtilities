@@ -1,6 +1,6 @@
 ##import modules to run here
-from .serialLoopback import test_loopback
+from .serialLoopback import main_menu
 
 if __name__ == "__main__":
     #entry point for the program
-    test_loopback()
+    main_menu()
