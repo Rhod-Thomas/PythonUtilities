@@ -9,7 +9,12 @@ lastBaud = 0
 
 def test_loopback():
     
-    target = input("Enter the target COM port path and baud rate(e.g., COM3 9600).")
+    target = input("Enter the target COM port path and baud rate (default: COM3 9600).")   
+    target = target.strip() 
+    
+    #if user entered nothing, fallback to default. 
+    if not target:
+        target = "COM3 9600"    
     
     try:
         port, baud = target.split()
@@ -35,7 +40,7 @@ def test_loopback():
                 print("Error: No loopback of message.") 
         
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"Error: {e}")        
     
 def test_others():
     print("Test others function executed")
@@ -46,11 +51,12 @@ def main_menu():
         
         print("*" * 40)
         print("Main Menu:")
-        print("*" * 40)
+        print("-" * 40)
         
         print("1. Test Loopback")
         print("2. Test Others")
         print("3. Exit")
+        print("-" * 40)
         
         choice = input("Enter your choice: ")
         
@@ -66,6 +72,5 @@ def main_menu():
             
         input("Press Enter to continue...")
         
-        print("")
         print("")
         
