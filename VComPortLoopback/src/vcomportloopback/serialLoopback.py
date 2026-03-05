@@ -1,5 +1,4 @@
 ##Com port loopback test file. 
-
 from exceptiongroup import catch
 import serial
 
@@ -7,19 +6,29 @@ import serial
 lastPort = ""
 lastBaud = 0
 
-def test_loopback():
+def configureComPort(COM, Baud, Timeout = 1, RTSCTS = False):
     
-    target = input("Enter the target COM port path and baud rate (default: COM3 9600).")   
-    target = target.strip() 
+    try :
+        with serial.Serial(COM, Baud, timeout=Timeout, rtscts=RTSCTS) as ser:
+            ser.write(b'Hello from the world of tomorrow!')
+            
+            #cache those working parameters:
+            global lastPort
+            lastPort= COM
+            global lastBaud
+            lastBaud= Baud
+            
+            return True
+               
+    except Exception as ex:
+        return False
     
-    #if user entered nothing, fallback to default. 
-    if not target:
-        target = "COM3 9600"    
+
+
+def simpleLoopback():
     
     try:
-        port, baud = target.split()
-        
-        with serial.Serial(port, int(baud), timeout=1) as ser:
+        with serial.Serial(lastPort, lastBaud, timeout=1) as ser:
             
             sendMessage = b'hello loopback!'
             ser.write(sendMessage)
@@ -27,50 +36,21 @@ def test_loopback():
             receiveMessage = ser.read(len(sendMessage))
             
             if(receiveMessage == sendMessage):
-                print("Loopback worked!!")
-                print("Caching Port and baud.")
-                
-                global lastPort
-                global lastBaud
-                
-                lastPort = port
-                lastBaud = baud
+                return True
                  
             else:
-                print("Error: No loopback of message.") 
+                return False
         
     except Exception as e:
         print(f"Error: {e}")        
     
-def test_others():
-    print("Test others function executed")
-
-def main_menu():
+   
+##Check that config is populated before returning  
+def getConfig():
     
-    while True:
-        
-        print("*" * 40)
-        print("Main Menu:")
-        print("-" * 40)
-        
-        print("1. Test Loopback")
-        print("2. Test Others")
-        print("3. Exit")
-        print("-" * 40)
-        
-        choice = input("Enter your choice: ")
-        
-        if choice == '1':
-            test_loopback()
-        elif choice == '2':
-            test_others()
-        elif choice == '3':
-            print("Exiting program.")
-            break
-        else:
-            print("Invalid choice. Please try again.")    
-            
-        input("Press Enter to continue...")
-        
-        print("")
-        
+    [com, baud] = "", 0
+    
+    if not lastPort or baud == 0:
+        return ["", 0]
+    
+    return [lastPort, lastBaud]
