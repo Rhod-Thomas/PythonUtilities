@@ -1,6 +1,4 @@
-if __name__ == "__main__":
-    print("hello!")
-    
+from .cli import main_menu  
     
 def main():
-    print("hello there!")
+       main_menu() 
