@@ -7,7 +7,9 @@ authors = [
     { name = "Rhod-Thomas", email = "engineer_rod@hotmail.co.uk" }
 ]
 requires-python = ">=3.10"
-dependencies = []
+dependencies = [
+    "pathlib>=1.0.1",
+]
 
 [project.scripts]
 run_app = "file_modifier_app.__main__:main"

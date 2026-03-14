@@ -1,4 +1,3 @@
-
 ## command line interface template
 def main_menu():
     
