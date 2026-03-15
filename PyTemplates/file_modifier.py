@@ -5,13 +5,12 @@
 class file_modifier:
     
     def __init__(self):
-        self.file = None
-        
+        self.file = None    
         
     def open_file(self, filename):
+        #TODO; check if file exists first...
         self.file = open(filename, "+wb")
-        
-        
+                
     def change_file(self, index, bytes_to_write):
         
         if not self.file :
@@ -25,4 +24,12 @@ class file_modifier:
         
         except Exception as ex:
             return (False, f"Exception: {ex}")
+
+            
+def main():
+     #entry point for testing the class 
+     print("hello!")         
+ 
+if __name__ == "__main__":
+       main()
         
