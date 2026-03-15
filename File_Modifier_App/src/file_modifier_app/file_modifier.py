@@ -1,4 +1,4 @@
-
+import os
 #Python class that allows for opening a file in binary format and overwriting 
 #at the target index with the bytes provided.  
 
